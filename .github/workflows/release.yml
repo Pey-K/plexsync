@@ -1,0 +1,55 @@
+name: Build Windows Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -r requirements.txt
+      
+      - name: Build Windows executable
+        run: |
+          pyinstaller --onefile --windowed --name "PlexSyncLauncher" launcher.py
+      
+      - name: Create release package
+        run: |
+          mkdir release
+          copy dist\PlexSyncLauncher.exe release\
+          copy start.bat release\
+          copy .env.example release\.env.example
+          copy README_WINDOWS.md release\
+          copy LICENSE release\
+          
+      - name: Create ZIP archive
+        run: |
+          powershell Compress-Archive -Path release\* -DestinationPath PlexSyncLauncher-Windows.zip
+      
+      - name: Upload release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: PlexSyncLauncher-Windows.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

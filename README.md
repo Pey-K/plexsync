@@ -14,8 +14,8 @@ A production-ready **Plex library synchronization engine** with live-first Node.
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/plex-collection-sync.git
-   cd plex-collection-sync
+   git clone https://github.com/Pey-K/plexsync.git
+   cd plexsync
    ```
 
 2. **Set up Python environment**
@@ -466,6 +466,23 @@ docker-compose up -d
 ```
 
 This runs both sync and backend services with proper volume mounts.
+
+# 🪟 Windows One-Click Setup
+
+For Windows users who want a simple solution:
+
+**Option 1: Batch File**
+- Create your `.env` file
+- Double-click `start.bat`
+- Done! The script handles everything automatically
+
+**Option 2: GUI Launcher**
+- Create your `.env` file
+- Run `python launcher.py` or use the pre-built `PlexSyncLauncher.exe`
+- Click "Start Sync & Server" button
+- Full GUI with logs and controls
+
+See [Windows Setup Guide](README_WINDOWS.md) for detailed instructions.
 
 # 📄 License
 

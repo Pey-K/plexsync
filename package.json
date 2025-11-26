@@ -7,14 +7,15 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:windows": "echo \"Run build_windows_exe.bat to create Windows executable\""
   },
   "keywords": ["plex", "api", "backend", "sqlite", "media", "metadata"],
   "author": "",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/plex-collection-sync.git"
+    "url": "https://github.com/Pey-K/plexsync.git"
   },
   "engines": {
     "node": ">=18.0.0",

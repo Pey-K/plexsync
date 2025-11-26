@@ -1,0 +1,7 @@
+# Additional requirements for GUI launcher
+# Note: tkinter comes bundled with Python on Windows, no installation needed
+# If tkinter is missing on Linux/Mac, install: python3-tk (Linux) or use system Python (Mac)
+
+# PyInstaller (for building .exe)
+# pyinstaller>=5.0.0
+

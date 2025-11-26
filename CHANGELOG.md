@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Extended metadata support for all media types (movies, shows, seasons, episodes, artists, albums, tracks)
 - Automatic schema migrations
 - Health check endpoint
+- Windows one-click launcher (batch file and GUI)
+- Windows executable builder
+- GitHub Actions workflow for automated Windows releases
 
 ### Changed
 - Improved error handling with automatic fallback to SQLite
@@ -36,6 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Parallel processing for image downloads
 - CLI arguments for flexible execution
 
-[Unreleased]: https://github.com/yourusername/plex-collection-sync/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/yourusername/plex-collection-sync/releases/tag/v1.0.0
+[Unreleased]: https://github.com/Pey-K/plexsync/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/Pey-K/plexsync/releases/tag/v1.0.0
 
