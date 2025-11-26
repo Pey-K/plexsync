@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  sync:
+    build:
+      context: .
+      dockerfile: Dockerfile.sync
+    container_name: plex-sync
+    environment:
+      - PLEX_URL=${PLEX_URL}
+      - PLEX_TOKEN=${PLEX_TOKEN}
+      - PLEX_LIBRARY_NAMES=${PLEX_LIBRARY_NAMES:-Movies,TV Shows,Music}
+      - DB_PATH=/app/data/plex_collection.db
+    volumes:
+      - ./data:/app/data
+      - ./assets:/app/assets
+    restart: "no"  # Run once, then exit
+    networks:
+      - plex-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: plex-backend
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - PLEX_URL=${PLEX_URL}
+      - PLEX_TOKEN=${PLEX_TOKEN}
+      - DB_PATH=/app/data/plex_collection.db
+      - PORT=3000
+      - LIVE_FIRST=${LIVE_FIRST:-true}
+    volumes:
+      - ./data:/app/data
+      - ./assets:/app/assets
+    restart: unless-stopped
+    depends_on:
+      - sync
+    networks:
+      - plex-network
+
+networks:
+  plex-network:
+    driver: bridge
+

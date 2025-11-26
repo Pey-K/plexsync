@@ -1,2 +1,25 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Python files
+*.py text eol=lf
+
+# JavaScript files
+*.js text eol=lf
+*.json text eol=lf
+
+# Shell scripts
+*.sh text eol=lf
+
+# Database files (binary)
+*.db binary
+*.db-journal binary
+*.db-wal binary
+*.db-shm binary
+
+# Images (binary)
+*.webp binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+

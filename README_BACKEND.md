@@ -50,10 +50,49 @@ The server will start on `http://localhost:3000` (or your configured PORT).
 
 ## 📡 API Endpoints
 
+All endpoints support automatic fallback to SQLite if Plex is unavailable. Responses include `source` and `fallback` fields.
+
 ### Movies
 
-- `GET /api/movies` - Get all movies (with pagination: `?limit=100&offset=0`)
-- `GET /api/movies/:ratingKey` - Get single movie
+**Get All Movies**
+```
+GET /api/movies?limit=100&offset=0
+```
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "ratingKey": 12345,
+      "title": "The Matrix",
+      "year": 1999,
+      "summary": "...",
+      "genres": "Action, Sci-Fi",
+      ...
+    }
+  ],
+  "total": 150,
+  "source": "plex"
+}
+```
+
+**Get Single Movie**
+```
+GET /api/movies/:ratingKey
+```
+
+**Response:**
+```json
+{
+  "data": {
+    "ratingKey": 12345,
+    "title": "The Matrix",
+    ...
+  },
+  "source": "plex"
+}
+```
 
 ### TV Shows
 
@@ -83,7 +122,62 @@ The server will start on `http://localhost:3000` (or your configured PORT).
 
 ### Health Check
 
-- `GET /health` - Check server and service status
+**Check Server Status**
+```
+GET /health
+```
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "plex": true,
+  "sqlite": true
+}
+```
+
+## 📝 API Response Format
+
+All endpoints return JSON with consistent structure:
+
+**Success Response:**
+```json
+{
+  "data": [...],
+  "total": 150,
+  "source": "plex"  // or "sqlite"
+}
+```
+
+**Fallback Response:**
+```json
+{
+  "data": [...],
+  "total": 150,
+  "source": "sqlite",
+  "fallback": true
+}
+```
+
+**Error Response:**
+```json
+{
+  "error": "Movie not found",
+  "fallback": false
+}
+```
+
+## 🔧 Query Parameters
+
+**Pagination:**
+- `limit` (default: 100) - Number of items per page
+- `offset` (default: 0) - Number of items to skip
+
+**Search:**
+- `q` or `query` - Search query string
+
+**Recent:**
+- `limit` (default: 20) - Number of recent items
 
 ## 🔄 How It Works
 

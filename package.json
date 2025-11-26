@@ -6,11 +6,20 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["plex", "api", "backend", "sqlite"],
+  "keywords": ["plex", "api", "backend", "sqlite", "media", "metadata"],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/plex-collection-sync.git"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "dependencies": {
     "express": "^4.18.2",
     "better-sqlite3": "^9.2.2",

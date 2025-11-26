@@ -1,0 +1,15 @@
+node_modules
+.env
+*.log
+.DS_Store
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+.git
+.gitignore
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE
+*.md
+

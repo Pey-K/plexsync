@@ -1,19 +1,87 @@
-# Plex Sync Engine -- SQLite Metadata Indexer
+# Plex Collection Sync
 
-This project is a **full Plex library synchronization engine** designed
-to extract, normalize, and store media metadata into a clean,
-query-friendly **SQLite database**.\
-It provides an organized, API-like view of your Plex libraries ---
-movies, TV shows, seasons, episodes, artists, albums, and tracks ---
-with thumbnails, codecs, durations, file sizes, and full metadata.
+A production-ready **Plex library synchronization engine** with live-first Node.js backend and SQLite fallback. Extracts, normalizes, and stores complete media metadata from your Plex server.
 
-This tool is ideal for:
+## 🚀 Quick Start
 
--   Personal dashboards\
--   Plex statistics sites\
--   Local metadata exploration\
--   Analytics tools\
--   Integration into apps like PyWebView or custom media browsers
+### Prerequisites
+
+- Python 3.9+ (for sync script)
+- Node.js 18+ (for backend API)
+- Access to a Plex Media Server
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/plex-collection-sync.git
+   cd plex-collection-sync
+   ```
+
+2. **Set up Python environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+3. **Set up Node.js environment**
+   ```bash
+   npm install
+   ```
+
+4. **Configure environment**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your Plex credentials
+   ```
+
+5. **Run initial sync**
+   ```bash
+   python plex_sync.py
+   ```
+
+6. **Start backend server**
+   ```bash
+   npm start
+   ```
+
+The API will be available at `http://localhost:3000`
+
+### Docker Setup (Alternative)
+
+```bash
+docker-compose up -d
+```
+
+This will:
+- Run the sync script once
+- Start the backend API server
+- Mount data and assets directories
+
+## 📖 What This Project Does
+
+This tool provides an organized, API-like view of your Plex libraries:
+- **Movies**: Full metadata, codecs, sizes, cast, crew, ratings
+- **TV Shows**: Shows, seasons, episodes with complete hierarchies
+- **Music**: Artists, albums, tracks with full metadata
+
+**Key Features:**
+- Live-first architecture: Direct Plex API with automatic SQLite fallback
+- Complete metadata extraction (genres, actors, directors, ratings, etc.)
+- WebP thumbnail conversion and storage
+- Fast full-text search (FTS5)
+- Server-side pagination
+- Response caching
+- Automatic schema migrations
+- Production-ready error handling
+
+**Ideal for:**
+- Personal dashboards
+- Plex statistics sites
+- Local metadata exploration
+- Analytics tools
+- Custom media browsers
 
 ------------------------------------------------------------------------
 
@@ -91,22 +159,89 @@ Syncing large libraries becomes dramatically faster.
 
 ------------------------------------------------------------------------
 
-# ⚙️ Requirements
+## 📚 Documentation
 
-Install all dependencies with:
+- **[Backend API Documentation](README_BACKEND.md)** - Complete API reference
+- **[Database Schema](SCHEMA.md)** - Detailed schema documentation
+- **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute
+- **[Changelog](CHANGELOG.md)** - Version history
+
+## ⚙️ Requirements
+
+### Python Dependencies
 
     pip install -r requirements.txt
 
+### Node.js Dependencies
+
+    npm install
+
+### Environment Variables
+
+See `.env.example` for required variables:
+- `PLEX_URL`: Your Plex server URL
+- `PLEX_TOKEN`: Your Plex authentication token
+- `PLEX_LIBRARY_NAMES`: Comma-separated library names
+- `DB_PATH`: Path to SQLite database
+- `PORT`: Backend server port (default: 3000)
+- `LIVE_FIRST`: Enable/disable live-first mode (default: true)
+
 ------------------------------------------------------------------------
 
-# 🔐 Environment Variables
+## 🔍 Example Usage
 
-Create a `.env` file:
+### Python Sync Script
 
-    PLEX_URL=http://your-plex-ip:32400
-    PLEX_TOKEN=YOURTOKENHERE
-    PLEX_LIBRARY_NAMES=Movies,TV Shows,Music
-    DB_PATH=./data/plex_collection.db
+```bash
+# Basic sync
+python plex_sync.py
+
+# Fast parallel mode (default)
+python plex_sync.py --fast
+
+# Skip images
+python plex_sync.py --no-images
+
+# Verbose logging
+python plex_sync.py --verbose
+
+# Rebuild database
+python plex_sync.py --rebuild-db
+```
+
+### Backend API
+
+```bash
+# Start server
+npm start
+
+# Development mode with auto-reload
+npm run dev
+```
+
+### API Examples
+
+```bash
+# Get all movies (paginated)
+curl http://localhost:3000/api/movies?limit=50&offset=0
+
+# Get single movie
+curl http://localhost:3000/api/movies/12345
+
+# Get TV show with seasons
+curl http://localhost:3000/api/shows/67890/seasons
+
+# Search
+curl http://localhost:3000/api/search?q=matrix
+
+# Recently added
+curl http://localhost:3000/api/recent?limit=20
+
+# Health check
+curl http://localhost:3000/health
+```
+
+See [Backend API Documentation](README_BACKEND.md) for complete API reference.
 
 ------------------------------------------------------------------------
 
@@ -301,7 +436,55 @@ Check `.env` variables and library names.
 
 ------------------------------------------------------------------------
 
+# 🧪 Testing
+
+Currently, manual testing is recommended. Future test suite will include:
+
+- Unit tests for utility functions
+- Integration tests for database operations
+- API endpoint tests
+- Error handling tests
+
+To test manually:
+
+```bash
+# Test sync script
+python plex_sync.py --verbose
+
+# Test backend API
+npm start
+curl http://localhost:3000/health
+curl http://localhost:3000/api/movies?limit=10
+```
+
+# 🐳 Docker
+
+See `docker-compose.yml` for containerized setup:
+
+```bash
+docker-compose up -d
+```
+
+This runs both sync and backend services with proper volume mounts.
+
+# 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+# 🤝 Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+# 📚 Additional Documentation
+
+- [Backend API Documentation](README_BACKEND.md) - Complete API reference
+- [Database Schema](SCHEMA.md) - Detailed schema documentation
+- [Error Handling](ERROR_HANDLING.md) - Error handling and robustness
+- [Contributing Guidelines](CONTRIBUTING.md) - How to contribute
+- [Changelog](CHANGELOG.md) - Version history
+
 # 🎉 Final Notes
 
-This project is designed as a **Plex-level metadata engine**, suitable
-for dashboards, analytics, and custom apps.
+This project is designed as a **production-ready Plex metadata engine**, suitable
+for dashboards, analytics, and custom apps. It provides both a Python sync tool
+and a Node.js API backend with automatic fallback for maximum reliability.
