@@ -1,0 +1,26 @@
+{
+  "name": "plex-collection-backend",
+  "version": "1.0.0",
+  "description": "Live-first Plex API backend with SQLite fallback",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["plex", "api", "backend", "sqlite"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^9.2.2",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "xml2js": "^0.6.2",
+    "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
+
